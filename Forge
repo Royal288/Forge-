@@ -1,0 +1,47 @@
+--[[ 
+    ENDER LOADER V1.0 - OFFICIAL
+    Logic: Loading UI -> Fetch Script -> Execute Dashboard
+]]
+
+local Players = game:GetService("Players")
+local CoreGui = game:GetService("CoreGui")
+
+-- === 1. LOADING GUI SETUP ===
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "EnderLoader"
+screenGui.Parent = CoreGui 
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(1, 0, 1, 0)
+frame.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+frame.Parent = screenGui
+
+local textLabel = Instance.new("TextLabel")
+textLabel.Size = UDim2.new(1, 0, 1, 0)
+textLabel.Text = "ENDER SCRIPT: LOADING ASSETS..."
+textLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+textLabel.Font = Enum.Font.GothamBlack
+textLabel.TextSize = 24
+textLabel.BackgroundTransparency = 1
+textLabel.Parent = frame
+
+-- === 2. EXECUTION LOGIC ===
+task.spawn(function()
+    -- !!! YAHAN APNI GITHUB RAW LINK PASTE KAREIN !!!
+    local SCRIPT_URL = "YAHAN_RAW_LINK_PASTE_KAREIN" 
+    
+    local success, scriptContent = pcall(function()
+        return game:HttpGet(SCRIPT_URL)
+    end)
+    
+    if success then
+        textLabel.Text = "AUTHENTICATED! STARTING DASHBOARD..."
+        task.wait(1.5)
+        screenGui:Destroy() -- Loading screen khatam
+        loadstring(scriptContent)() -- Asli script GitHub se load hogi
+    else
+        textLabel.Text = "ERROR: LINK EXPIRED OR NO INTERNET"
+        task.wait(3)
+        screenGui:Destroy()
+    end
+end)
